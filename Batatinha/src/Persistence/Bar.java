@@ -2,6 +2,9 @@ package Persistence;
 
 import Business.Milhas;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -184,6 +187,24 @@ public class Bar {
 
     public int quantidadePessoasDia(){
         return pessoas.size();
+    }
+    
+    public void escreveArquivo(String path) throws IOException{
+    	BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+    	
+    	for(String key: pessoas.keySet()){
+    		
+    		if(pessoas.get(key).getNumSocio()==0){
+    			bw.append(key + " - " + "cliente\n");
+    		}
+    		else{
+    			bw.append(key + " - " + "socio\n");
+    		}
+    		
+    	}
+    	bw.close();
+    	
+    	
     }
 
 }
