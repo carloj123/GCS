@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.text.DecimalFormat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import Persistence.Bar;

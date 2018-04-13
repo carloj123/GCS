@@ -50,7 +50,7 @@ public class App extends Application{
 
 
 
-        //CADASTRAR CLIENTE
+        //CADASTRAR CLIENTE NO BAR
         Text info = new Text("Se o cliente nao for socio, nao informar nenhum numero");
         TextField cpf = new TextField();
         TextField nome = new TextField();
@@ -84,6 +84,80 @@ public class App extends Application{
             dialogInput.showAndWait();
 
         });
+        
+        
+        //REMOVER CLIENTE DO BAR        
+        TextField cpfRetirar = new TextField("CPF do cliente");
+        
+        Button removerCliente = new Button("salvar");
+        removerCliente.setOnAction(e->{
+        	bar.saiuDoBar(cpf.toString());
+        });
+        
+        Button saiuCliente = new Button("Remover cliente");
+        
+        saiuCliente.setOnAction(e->{
+            dialogInput.setTitle("Remover cliente");
+            dialogInput.setHeaderText("Insira as informacoes necessarias");
+            dialogInput.getDialogPane().getChildren().get(1).setVisible(false);
+            dialogInput.getDialogPane().getChildren().get(2).setVisible(false);
+
+            GridPane contents = new GridPane();
+
+            contents.add(cpfRetirar, 0 , 0);
+            contents.add(removerCliente, 1, 0);
+
+            dialogInput.getDialogPane().setContent(contents);
+            dialogInput.showAndWait();
+        });
+        
+        //MOSTRAR OS CLIENTES DO DIA
+        TextField path = new TextField("Diretorio que deseja salvar");
+        
+        Button escreverClientes = new Button();
+        
+        escreverClientes.setOnAction(e->{
+        	try {
+				bar.escreveArquivo(path.toString());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+        });
+        
+        Button mostrarClientes = new Button("salvar");
+        
+        mostrarClientes.setOnAction(e->{
+        	
+            dialogInput.setTitle("Salvar clientes em txt");
+            dialogInput.setHeaderText("Insira as informacoes necessarias");
+            dialogInput.getDialogPane().getChildren().get(1).setVisible(false);
+            dialogInput.getDialogPane().getChildren().get(2).setVisible(false);
+
+            GridPane contents = new GridPane();
+
+            contents.add(path, 0 , 0);
+            contents.add(escreverClientes, 1, 0);
+
+            dialogInput.getDialogPane().setContent(contents);
+            dialogInput.showAndWait();
+        	
+        });
+        
+        
+        //MOSTRA CLIENTES NO BAR
+        
+        
+        //MOSTRA UM CLIENTE DE CERTO CPF SE ESTÁ NO BAR
+        
+        
+        //QUANTAS PESSOAS ESTÃO NO BAR
+        
+        
+        //DISTRIBUIÇÃO DE GÊNERO DAS PESSOAS NO BAR
+        
+        
+        //QUANTOS SAO SOCIOS E QUANTOS NAO SAO QUE ESTAO NO BAR
+        
 
         BorderPane pane = new BorderPane();
         pane.setCenter(buttonsPane);
