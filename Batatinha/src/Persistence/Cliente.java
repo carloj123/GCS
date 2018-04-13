@@ -1,4 +1,4 @@
-package Persistence;
+package Batatinha.src.Persistence;
 
 public class Cliente {
 	private String nome;

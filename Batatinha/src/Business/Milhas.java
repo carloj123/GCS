@@ -1,49 +1,55 @@
-package Business;
+package Batatinha.src.Business;
 
-import Persistence.Cliente;
+import Batatinha.src.Persistence.*;
 
 import java.util.HashMap;
+import java.util.Random;
 
-public class Milhas{
+import Batatinha.src.Persistence.Cliente;
 
-    HashMap<Cliente, Integer> milhasPorCliente;
 
-    public Milhas(){
+public class Milhas {
 
-        this.milhasPorCliente = new HashMap<>();
+	HashMap<Cliente, Integer> milhasPorCliente;
 
-    }
+	public Milhas() {
 
-    public void addMilha(Cliente c){
+		this.milhasPorCliente = new HashMap<>();
 
-        if(milhasPorCliente.containsKey(c)){
-            milhasPorCliente.put(c, (milhasPorCliente.get(c) + 100));
-        }
-        else{
-            milhasPorCliente.put(c,100);
-        }
-    }
+	}
 
-    public boolean usaMilhas(Cliente c, int milhas){
+	public void addMilha(Cliente c) {
+		Random r = new Random();
 
-        if(milhasPorCliente.containsKey(c)){
-            milhasPorCliente.put(c, (milhasPorCliente.get(c) - milhas));
-            return true;
-        }
-        else{
-            return false;
-        }
+		int num = r.nextInt(10);
 
-    }
+		if (num < 5) {
+			if (milhasPorCliente.containsKey(c)) {
+				milhasPorCliente.put(c, (milhasPorCliente.get(c) + 100));
+			} else {
+				milhasPorCliente.put(c, 100);
+			}
+		}
+	}
 
-    public boolean apagarSocio(Cliente c){
-        if(milhasPorCliente.containsKey(c)){
-            milhasPorCliente.remove(c);
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+	public boolean usaMilhas(Cliente c, int milhas) {
+
+		if (milhasPorCliente.containsKey(c)) {
+			milhasPorCliente.put(c, (milhasPorCliente.get(c) - milhas));
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public boolean apagarSocio(Cliente c) {
+		if (milhasPorCliente.containsKey(c)) {
+			milhasPorCliente.remove(c);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 }
