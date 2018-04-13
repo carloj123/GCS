@@ -1,10 +1,13 @@
-package Persistence;
+package Batatinha.src.Persistence;
 
-import Business.Milhas;
+import Batatinha.src.Business.*;
+import Batatinha.src.Persistence.*;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,16 +192,23 @@ public class Bar {
         return pessoas.size();
     }
     
-    public void escreveArquivo(String path) throws IOException{
-    	BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+    public void escreveArquivo() throws IOException{
+    	
+    	File arquivo = new File("Users/User/Desktop/Lista_Clientes.txt");
+    	
+    	if(!arquivo.exists()){
+    		arquivo.createNewFile();
+    	}
+    	
+    	BufferedWriter bw = new BufferedWriter(new FileWriter(arquivo));
     	
     	for(String key: pessoas.keySet()){
     		
     		if(pessoas.get(key).getNumSocio()==0){
-    			bw.append(key + " - " + "cliente\n");
+    			bw.write(key + " - " + "cliente\n");
     		}
     		else{
-    			bw.append(key + " - " + "socio\n");
+    			bw.write(key + " - " + "socio\n");
     		}
     		
     	}
