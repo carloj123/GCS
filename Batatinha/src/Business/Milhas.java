@@ -1,6 +1,6 @@
-package Business;
+package Batatinha.src.Business;
 
-import Persistence.Cliente;
+import Batatinha.src.Persistence.*;
 
 import java.util.HashMap;
 
