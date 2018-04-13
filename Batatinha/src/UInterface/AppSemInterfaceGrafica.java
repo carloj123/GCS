@@ -13,12 +13,14 @@ public class AppSemInterfaceGrafica {
 		int countSocio = 0;
 		while (true) {
 
-			System.out.println(
-					"Digite a opção do que desejar fazer\n" + "1 - Cadastrar Cliente\n" + "2 - Remover Cliente do Bar\n"
-							+ "3 - Mostrar Todos Clientes do Bar\n" + "4 - Mostra um Cliente de Determinado CPF\n"
-							+ "5 - Quantas Pessoas Estão no Bar\n" + "6 - Distribuição de Genero no Bar|n"
-							+ "7 - Quantidade de Socios e Nao Socios no Bar|n" + "Digite '0' para Sair");
+			System.out.println("Digite a opï¿½ï¿½o do que desejar fazer\n" + "1 - Cadastrar Cliente\					+ "2 - Remover Cliente do Bar\n" + "3 - Mostrar Todos Clientes do Bar\n"
+					+ "4 - Mostra um Cliente de Determinado CPF\n" + "5 - Quantas Pessoas Estï¿½o no Bar\n"					+ "6 - Distribuiï¿½ï¿½o de Genero no Bar\n" + "7 - Quantidade de Socios e Nao Socios no Bar\					+ "8 - CPF das Pessoas no Bar\n" + "9 - Idade das Pessoas no Bar\n" + "Digite '0' para Sair");
 			int opcao = in.nextInt();
+
+			if (opcao > 9 || opcao < 0) {
+				System.out.println("Informe uma opcao valida");
+				opcao = in.nextInt();
+			}
 
 			if (opcao == 0) {
 				break;
@@ -88,7 +90,7 @@ public class AppSemInterfaceGrafica {
 			}
 		}
 
-		System.out.println("Os clientes do dia estão salvos no arquivo -> 'Users/User/Desktop/Lista_Clientes.txt'");
+		System.out.println("Os clientes do dia estï¿½o salvos no arquivo -> 'Users/User/Desktop/Lista_Clientes.txt'");
 		bar.escreveArquivo();
 	}
 }
