@@ -1,5 +1,7 @@
 package Batatinha.src.Business;
 
+import Batatinha.src.Persistence.*;
+
 import java.util.HashMap;
 import java.util.Random;
 
