@@ -60,7 +60,7 @@ public class AppSemInterfaceGrafica {
 					System.out.println("Usuario nao tem idade suficiente");
 					break;
 				}
-
+				genero = genero.toUpperCase();
 				Cliente c = new Cliente(nome, cpf, idade, genero.charAt(0));
 				System.out.println();
 				if (!(ehSocio.equalsIgnoreCase("sim")) && !(ehSocio.equalsIgnoreCase("nao"))) {
@@ -82,9 +82,13 @@ public class AppSemInterfaceGrafica {
 
 				try {
 					Integer.parseInt(cpfNome);
-					bar.saiuDoBar(cpfNome);
+					if(!bar.saiuDoBar(cpfNome)){
+						System.out.println("Cliente nao esta no bar");
+					}
 				} catch (Exception e) {
-					bar.saiuDoBarNome(cpfNome);
+					if(!bar.saiuDoBarNome(cpfNome)){
+						System.out.println("Cliente nao  no bar");
+					}
 				}
 
 				System.out.println("\n\n\n\n\n\n");
@@ -92,14 +96,30 @@ public class AppSemInterfaceGrafica {
 			}
 
 			case 3:
-				bar.pessoasNoBar().forEach(c -> System.out.println(c));
+				bar.pessoasNoBar().forEach(c -> System.out.println(c.toString()));
 				System.out.println("\n\n\n\n\n\n");
 
 			case 4: {
-				System.out.println("Informe o CPF do cliente procurado");
+				System.out.println("Informe o CPF ou Nome do cliente procurado");
 				String cpf = in.next();
 
-				System.out.println(bar.pessoaNoBar(cpf).getNome());
+				try{
+					Integer.parseInt(cpf);
+					if(bar.pessoaNoBar(cpf).getNome()!=null){
+						System.out.println(bar.pessoaNoBar(cpf).getNome());
+					}
+					else{
+						System.out.println("Pessoa nao esta no bar");
+					}
+				}catch(Exception e){
+					if(bar.pessoaNoBar(cpf,0)!=null){
+						System.out.println(bar.pessoaNoBar(cpf,0).toString());
+					}
+					else{
+						System.out.println("Pessoa nao esta no bar");
+					}
+				}
+				
 				System.out.println("\n\n\n\n\n\n");
 				break;
 			}
