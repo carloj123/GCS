@@ -31,8 +31,6 @@ public class Bar {
 
 	public void add(String s, Cliente c) {
 
-		
-
 		if (c.getNumSocio() != 0) {
 			socios.put(c.getCpf(), c);
 			sociosFixo.add(c);
@@ -84,24 +82,47 @@ public class Bar {
 
 	}
 
-	public void saiuDoBarNome(String nome) {
+	public Cliente pessoaNoBar(String nome, int i) {
+		if (pessoas.containsKey(nome)) {
+			if (clientes.containsKey(pessoas.get(nome).getCpf()))
+				return clientes.get(pessoas.get(nome).getCpf());
 
-		if (clientes.containsKey(pessoas.get(nome).getCpf()))
-			clientes.remove(pessoas.get(nome).getCpf());
+			else if (socios.containsKey(pessoas.get(nome).getCpf()))
+				return socios.get(pessoas.get(nome).getCpf());
 
-		else
-			socios.remove(pessoas.get(nome).getCpf());
+			else
+				return null;
+
+		}
+
+		return null;
 	}
 
-	public void saiuDoBar(String cpf) {
+	public boolean saiuDoBarNome(String nome) {
+		if (pessoas.containsKey(nome)) {
+			if (clientes.containsKey(pessoas.get(nome).getCpf())) {
+				clientes.remove(pessoas.get(nome).getCpf());
+				return true;
+			} else {
+				socios.remove(pessoas.get(nome).getCpf());
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean saiuDoBar(String cpf) {
 
 		if (clientes.containsKey(cpf)) {
 			clientes.remove(cpf);
+			return true;
 		}
 
-		else {
+		else if (socios.containsKey(cpf)) {
 			socios.remove(cpf);
+			return true;
 		}
+		return false;
 	}
 
 	public double porcentagemSociosNoBar() {
@@ -220,48 +241,47 @@ public class Bar {
 		int[] num = new int[11];
 		for (int i = 0; i < cpf.length(); i++) {
 			Character cpfVet = cpf.charAt(i);
-			  num[i] = Integer.parseInt(cpfVet.toString());
+			num[i] = Integer.parseInt(cpfVet.toString());
 		}
-		
+
 		int aux = 0;
 		int count = 10;
-		for(int j = 0; j <num.length-2; j++){
-			aux = aux + (num[j]*count);
+		for (int j = 0; j < num.length - 2; j++) {
+			aux = aux + (num[j] * count);
 			count--;
 		}
-		
-		aux = -(aux%11) + 11;
-		
-		if(aux>9){
+
+		aux = -(aux % 11) + 11;
+
+		if (aux > 9) {
 			aux = 0;
 		}
-		
+
 		int aux1 = 0;
 		int count1 = 11;
-		for(int k = 0; k <num.length-2; k++){
-			aux1 = aux1 + (num[k]*count1);
+		for (int k = 0; k < num.length - 2; k++) {
+			aux1 = aux1 + (num[k] * count1);
 			count1--;
 		}
-		
-		aux1 = -(aux1%11) + 11;
-		
-		
-		if(num[9] == aux && num[10] == aux1){
+
+		aux1 = -(aux1 % 11) + 11;
+
+		if (num[9] == aux && num[10] == aux1) {
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	public boolean verificaIdade(int idade, int idade2) {
-		if(idade>=18){
+		if (idade >= 18) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean verificaIdade(int idade) {
-		if(idade<0 || idade>123){
+		if (idade < 0 || idade > 123) {
 			return false;
 		}
 		return true;
