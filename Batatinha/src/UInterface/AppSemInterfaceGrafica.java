@@ -41,56 +41,93 @@ public class AppSemInterfaceGrafica {
 				System.out.println("Informe se o cliente eh socio(sim ou nao)");
 				String ehSocio = in.next();
 
+				if (!bar.verificaCPF(cpf)) {
+					do {
+						System.out.println("Insira um CPF valido");
+						cpf = in.next();
+					} while (!bar.verificaCPF(cpf));
+				}
+				if(!bar.verificaIdade(idade)){
+					do{
+						System.out.println("Idade Inv�lida");						idade = in.nextInt();
+					}while(!bar.verificaIdade(idade));
+				}
+				if(!bar.verificaIdade(idade, idade)){
+					System.out.println("Usuario nao tem idade suficiente");
+					break;
+				}
+
 				Cliente c = new Cliente(nome, cpf, idade, genero.charAt(0));
-				if (ehSocio.equalsIgnoreCase("sim"))
+				System.out.println();
+				if (!(ehSocio.equalsIgnoreCase("sim")) && !(ehSocio.equalsIgnoreCase("nao"))) {
+					System.out.println("Digite 'sim' ou 'nao' ");
+					ehSocio = in.next();
+				} else if (ehSocio.equalsIgnoreCase("sim")) {
 					c.setNumSocio(countSocio);
-				countSocio++;
+					countSocio++;
+				}
 				bar.add(cpf, c);
-				System.out.println("\n\n\n");
+				System.out.println("\n\n\n\n\n\n");
 				break;
+
 			}
 
 			case 2: {
-				System.out.println("Informe o CPF do cliente");
-				String cpf = in.next();
-				bar.saiuDoBar(cpf);
-				System.out.println("\n\n\n");
+				System.out.println("Informe o CPF ou Nome do cliente");
+				String cpfNome = in.next();
+
+				try {
+					Integer.parseInt(cpfNome);
+					bar.saiuDoBar(cpfNome);
+				} catch (Exception e) {
+					bar.saiuDoBarNome(cpfNome);
+				}
+
+				System.out.println("\n\n\n\n\n\n");
 				break;
 			}
 
 			case 3:
 				bar.pessoasNoBar().forEach(c -> System.out.println(c));
-				System.out.println("\n\n\n");
+				System.out.println("\n\n\n\n\n\n");
 
 			case 4: {
 				System.out.println("Informe o CPF do cliente procurado");
 				String cpf = in.next();
 
 				System.out.println(bar.pessoaNoBar(cpf).getNome());
-				System.out.println("\n\n\n");
+				System.out.println("\n\n\n\n\n\n");
 				break;
 			}
 
 			case 5:
-				System.out.println("Quantidade de pessoas: " + bar.quantidadeNSociosBar() + bar.quantidadeSociosBar());
-				System.out.println("\n\n\n");
+				int batata = bar.quantidadeNSociosBar() + bar.quantidadeSociosBar();
+				System.out.println("Quantidade de pessoas: " + batata);
+				System.out.println("\n\n\n\n\n\n");
 				break;
 
 			case 6:
 				System.out.println("Porcentagem Feminina: " + bar.percentualFemBar() + "\nPorcentagem Masculina: "
 						+ bar.percentualMascBar());
-				System.out.println("\n\n\n");
+				System.out.println("\n\n\n\n\n\n");
 				break;
 
 			case 7:
 				System.out.println("Quantidade de Socios: " + bar.quantidadeSociosBar() + "\nQuantidade de Nao Socios: "
 						+ bar.quantidadeNSociosBar());
-				System.out.println("\n\n\n");
+				System.out.println("\n\n\n\n\n\n");
+				break;
+
+			case 8:
+				bar.pessoasNoBar(0).forEach(c -> System.out.println(c.getCpf()));
+				break;
+
+			case 9:
+				bar.pessoasNoBar(0).forEach(c -> System.out.println(c.getIdade()));
 				break;
 			}
 		}
 
-		System.out.println("Os clientes do dia est�o salvos no arquivo -> 'Users/User/Desktop/Lista_Clientes.txt'");
-		bar.escreveArquivo();
+		System.out.println("Os clientes do dia est�o salvos no arquivo -> 'Users/User/Desktop/Lista_Clientes.txt'");		bar.escreveArquivo();
 	}
 }
