@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.text.DecimalFormat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import Persistence.Bar;
@@ -19,7 +20,8 @@ public class TestaBar {
 	Cliente c6;
 	Bar bar;
 
-	protected void setUp(){
+	@Before
+	public void setUp(){
 		c1 = new Cliente("juca", "123456789101", 24, 'M');
 		c2 = new Cliente("joca", "123456789102", 25, 'M');
 		c3 = new Cliente("jussara", "123456789103", 26, 'F');

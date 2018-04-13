@@ -1,175 +1,210 @@
 package Persistence;
 
+import Business.Milhas;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Bar {
-	private HashMap<String, Cliente> clientes;
-	private HashMap<String, Cliente> socios;
-	private HashMap<String, Cliente> pessoas;
+    private HashMap<String, Cliente> clientes;
+    private HashMap<String, Cliente> socios;
+    private HashMap<String, Cliente> pessoas;
+    private List<Cliente> clientesFixo;
+    private List<Cliente> sociosFixo;
+    private Milhas milhas;
 
-	public Bar() {
-		this.clientes = new HashMap<>();
-		this.socios = new HashMap<>();
-		this.pessoas = new HashMap<>();
-	}
+    public Bar() {
+        this.clientes = new HashMap<>();
+        this.socios = new HashMap<>();
+        this.pessoas = new HashMap<>();
+        this.clientesFixo = new ArrayList<>();
+        this.sociosFixo = new ArrayList<>();
+        this.milhas  = new Milhas();
+    }
 
-	public void add(String s, Cliente c) {
-		if (c.getNumSocio() != 0) {
-			socios.put(c.getCpf(), c);
-		} else {
-			clientes.put(c.getCpf(), c);
-		}
-		pessoas.put(c.getNome(), c);
-	}
+    public void add(String s, Cliente c) {
+        if (c.getNumSocio() != 0) {
+            socios.put(c.getCpf(), c);
+            sociosFixo.add(c);
+            milhas.addMilha(c);
 
-	public ArrayList<String> pessoasNoBar() {
-		ArrayList<String> pessoas = new ArrayList<>();
+        } else {
+            clientes.put(c.getCpf(), c);
+            clientesFixo.add(c);
 
-		for (String key : clientes.keySet()) {
-			pessoas.add(clientes.get(key).getNome());
-		}
-		for (String key : socios.keySet()) {
-			pessoas.add(socios.get(key).getNome());
-		}
+        }
+        pessoas.put(c.getNome(), c);
+    }
 
-		return pessoas;
-	}
+    public ArrayList<String> pessoasNoBar() {
+        ArrayList<String> pessoas = new ArrayList<>();
 
-	public ArrayList<Cliente> pessoasNoBar(int i) {
-		ArrayList<Cliente> pessoas = new ArrayList<>();
+        for (String key : clientes.keySet()) {
+            pessoas.add(clientes.get(key).getNome());
+        }
+        for (String key : socios.keySet()) {
+            pessoas.add(socios.get(key).getNome());
+        }
 
-		for (String key : clientes.keySet()) {
-			pessoas.add(clientes.get(key));
-		}
-		for (String key : socios.keySet()) {
-			pessoas.add(socios.get(key));
-		}
+        return pessoas;
+    }
 
-		return pessoas;
-	}
+    public ArrayList<Cliente> pessoasNoBar(int i) {
+        ArrayList<Cliente> pessoas = new ArrayList<>();
 
-	public Cliente pessoaNoBar(String cpf) {
+        for (String key : clientes.keySet()) {
+            pessoas.add(clientes.get(key));
+        }
+        for (String key : socios.keySet()) {
+            pessoas.add(socios.get(key));
+        }
 
-		if (clientes.get(cpf) != null)
-			return clientes.get(cpf);
+        return pessoas;
+    }
 
-		else if (socios.get(cpf) != null)
-			return socios.get(cpf);
+    public Cliente pessoaNoBar(String cpf) {
 
-		return null;
+        if (clientes.get(cpf) != null)
+            return clientes.get(cpf);
 
-	}
+        else if (socios.get(cpf) != null)
+            return socios.get(cpf);
 
-	public void saiuDoBarNome(String nome) {
+        return null;
 
-		if (clientes.containsKey(pessoas.get(nome).getCpf()))
-			clientes.remove(pessoas.get(nome).getCpf());
+    }
 
-		else
-			socios.remove(pessoas.get(nome).getCpf());
-	}
+    public void saiuDoBarNome(String nome) {
 
-	public void saiuDoBar(String cpf) {
+        if (clientes.containsKey(pessoas.get(nome).getCpf()))
+            clientes.remove(pessoas.get(nome).getCpf());
 
-		if (clientes.containsKey(cpf)) {
-			clientes.remove(cpf);
-		}
+        else
+            socios.remove(pessoas.get(nome).getCpf());
+    }
 
-		else {
-			socios.remove(cpf);
-		}
-	}
+    public void saiuDoBar(String cpf) {
 
-	public double porcentagemSociosNoBar() {
+        if (clientes.containsKey(cpf)) {
+            clientes.remove(cpf);
+        }
 
-		int total = pessoasNoBar().size();
-		int quantSocio = socios.size();
+        else {
+            socios.remove(cpf);
+        }
+    }
 
-		double perSocio = (quantSocio * 100) / total;
+    public double porcentagemSociosNoBar() {
 
-		return perSocio ;
+        int total = pessoasNoBar().size();
+        int quantSocio = socios.size();
 
-	}
-	
-	public double porcentagemNSociosNoBar(){
-		
-		int total = pessoasNoBar().size();
-		int quantiNSocio = clientes.size();
+        double perSocio = (quantSocio * 100) / total;
 
-		double percNSocio = (quantiNSocio * 100) / total;
-		
-		return percNSocio;
-	}
+        return perSocio ;
 
-	public double porcentagemSociosDia() {
+    }
 
-		int total = pessoas.size();
-		int quantSocio = socios.size();
+    public double porcentagemNSociosNoBar(){
 
-		double perSocio = (quantSocio * 100) / total;
+        int total = pessoasNoBar().size();
+        int quantiNSocio = clientes.size();
 
-		return perSocio;
+        double percNSocio = (quantiNSocio * 100) / total;
 
-	}
-	
-	public double porcentagemNSociosDia(){
-		
-		int total = pessoas.size();
-		int quantiNSocio = clientes.size();
+        return percNSocio;
+    }
 
-		double percNSocio = (quantiNSocio * 100) / total;
-		
-		return percNSocio;
-	}
+    public double porcentagemSociosDia() {
 
-	public int quantidadeSociosBar() {
+        int total = pessoas.size();
+        int quantSocio = socios.size();
 
-		return socios.size();
+        double perSocio = (quantSocio * 100) / total;
 
-	}
-	
-	public int quantidadeNSociosBar(){
-		return clientes.size();
-	}
+        return perSocio;
 
-	public double percentualMascBar() {
+    }
 
-		int quantMasc = 0;
-		int cont = 0;
+    public double porcentagemNSociosDia(){
 
-		for (Cliente c : pessoasNoBar(0)) {
-			if (c.getGenero() == 'M') {
-				quantMasc++;
-			} 
-			cont++;
-		}
+        int total = pessoas.size();
+        int quantiNSocio = clientes.size();
 
-		double perHom = (quantMasc * 100) / cont;
+        double percNSocio = (quantiNSocio * 100) / total;
 
-		return perHom;
-	}
-	
-	public double percentualFemBar(){
-		int cont = 0;
-		int quantFem = 0;
-		
-		for (Cliente c : pessoasNoBar(0)) {
-			if (c.getGenero() == 'F') {
-				quantFem++;
-			} 
-			cont++;
-		}
-		
+        return percNSocio;
+    }
 
-		double percMul = (quantFem * 100) / cont;
-		
-		return percMul;
-		
-	}
-	
-	public int quantidadePessoasDia(){
-		return pessoas.size();
-	}
+    public int quantidadeSociosBar() {
+
+        return socios.size();
+
+    }
+
+    public int quantidadeNSociosBar(){
+        return clientes.size();
+    }
+
+    public double percentualMascBar() {
+
+        int quantMasc = 0;
+        int cont = 0;
+
+        for (Cliente c : pessoasNoBar(0)) {
+            if (c.getGenero() == 'M') {
+                quantMasc++;
+            }
+            cont++;
+        }
+
+        double perHom = (quantMasc * 100) / cont;
+
+        return perHom;
+    }
+
+    public double percentualFemBar(){
+        int cont = 0;
+        int quantFem = 0;
+
+        for (Cliente c : pessoasNoBar(0)) {
+            if (c.getGenero() == 'F') {
+                quantFem++;
+            }
+            cont++;
+        }
+
+
+        double percMul = (quantFem * 100) / cont;
+
+        return percMul;
+
+    }
+
+    public int quantidadePessoasDia(){
+        return pessoas.size();
+    }
+    
+    public void escreveArquivo(String path) throws IOException{
+    	BufferedWriter bw = new BufferedWriter(new FileWriter(path));
+    	
+    	for(String key: pessoas.keySet()){
+    		
+    		if(pessoas.get(key).getNumSocio()==0){
+    			bw.append(key + " - " + "cliente\n");
+    		}
+    		else{
+    			bw.append(key + " - " + "socio\n");
+    		}
+    		
+    	}
+    	bw.close();
+    	
+    	
+    }
 
 }
