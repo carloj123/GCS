@@ -5,6 +5,7 @@ import java.util.Random;
 
 import Batatinha.src.Persistence.Cliente;
 
+
 public class Milhas {
 
 	HashMap<Cliente, Integer> milhasPorCliente;
@@ -20,7 +21,7 @@ public class Milhas {
 
 		int num = r.nextInt(10);
 
-		if (num == 1 || num == 2 || num == 3) {
+		if (num < 5) {
 			if (milhasPorCliente.containsKey(c)) {
 				milhasPorCliente.put(c, (milhasPorCliente.get(c) + 100));
 			} else {
